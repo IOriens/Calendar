@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box; }
+
+table {
+  width: 100%;
+  text-align: center;
+  vertical-align: center;
+  border-collapse: collapse; }
+  table tr {
+    border-bottom: 1px dashed #ddd; }
+  table tr:first-child {
+    border-bottom: 2px solid #A6D2FE; }
+  table tr:last-child {
+    border: none; }
+  table th {
+    font-size: 1em;
+    color: #000;
+    font-weight: 400; }
+  table th, table td {
+    padding: 15px 0; }
+
+body {
+  text-align: center; }
+
+select {
+  display: inline-block;
+  padding: 5px;
+  margin: 15px; }
+
+@media (min-width: 1024px) {
+  main {
+    width: 600px;
+    margin: 0 auto; } }
+
+/*# sourceMappingURL=style.css.map */
