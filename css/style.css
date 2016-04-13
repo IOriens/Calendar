@@ -17,7 +17,18 @@ table {
     color: #000;
     font-weight: 400; }
   table th, table td {
-    padding: 15px 0; }
+    display: inline-block;
+    padding: 10px 5px;
+    width: 14.28571%;
+    height: 50px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
+    table th h1, table td h1 {
+      font-weight: bold;
+      font-size: 14px; }
+    table th span, table td span {
+      font-size: 13px; }
 
 body {
   text-align: center; }
@@ -28,7 +39,7 @@ select {
   margin: 15px; }
 
 @media (min-width: 1024px) {
-  main {
+  .main {
     width: 600px;
     margin: 0 auto; } }
 
