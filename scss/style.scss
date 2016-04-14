@@ -5,11 +5,13 @@
 body {
   text-align: center;
 }
+
 h1,h2,h3 {
   margin: 0;
   padding: 0;
 }
 
+//日历表
 table {
   width: 100%;
   text-align: center;
@@ -24,8 +26,6 @@ table {
   tr:last-child {
     border: none;
   }
-
-
 
   th, td {
     display: inline-block;
@@ -51,12 +51,14 @@ table {
   }
 }
 
+//选择框
 select {
   display: inline-block;
   padding: 5px;
   margin: 5px;
 }
 
+//信息展示部分
 .info {
   background-color: #B3D7E6;
   border-radius: 5px;
@@ -89,7 +91,7 @@ select {
   }
 }
 
-
+//大屏适配
 @media(min-width: 768px) {
   .main {
     width: 600px;
