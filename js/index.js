@@ -9,7 +9,7 @@ calendar.dayNum = 0
 calendar.weekdaysInChinese = ["一","二","三","四","五","六","日"];
 calendar.tianGan = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"]
 calendar.diZhi = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"]
-calendar.chineseZodiac = ["鼠","牛","虎","兔","蛇","马","羊","猴","鸡","狗","猪"]
+calendar.chineseZodiac = ["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"]
 calendar.solarTerm = [
     "小寒", "大寒", "立春", "雨水", "惊蛰", "春分",
     "清明", "谷雨", "立夏", "小满", "芒种", "夏至",
@@ -469,6 +469,14 @@ calendar.calDays = function (year, month, dayNum) {
         day.lunarMonth = outcome[0]
         day.lunarDay = outcome[1]
         day.solarSessionTerm = ""
+        if(day.lunarMonth > 6 && month < 6) {
+            day.gan =  (calendar.calGan(year - 1) - 1 + 10) % 10
+            day.zhi =  (calendar.calZhi(year - 1) - 1 + 12) % 12
+        } else {
+            day.gan =  (calendar.calGan(year) - 1 + 10) % 10
+            day.zhi =  (calendar.calZhi(year) - 1 + 12) % 12
+        }
+
         calendar.days[i] = day
     }
 
@@ -517,11 +525,16 @@ calendar.updateDays = function () {
 
 //显示日期信息
 calendar.showDayInfo = function (day) {
-    var out = "<h2>"+(day+1) + "</h2>"
-    out += "<h3>星期" + calendar.weekdaysInChinese[((calendar.days[day].weekday -1) + 7) % 7] + "</h3>"
-    out += "<p>" + calendar.days[day].nationalHoliday + "</p>"
-    out += "<p>" + calendar.getLunarMonthString(calendar.days[day].lunarMonth)+calendar.getLunarDayString(calendar.days[day].lunarDay)+ "</p>"
-    calendar.$('dayInfo').innerHTML = out
+    //年信息
+    var gan = calendar.days[day].gan
+    var zhi = calendar.days[day].zhi
+    calendar.$("lunarYearInfo").innerHTML = calendar.tianGan[gan]+ calendar.diZhi[zhi] + calendar.chineseZodiac[zhi] + "年"
+
+    //日信息
+    calendar.$('selectedDay').innerHTML = (day + 1)
+    calendar.$('weekDay').innerHTML = "星期" + calendar.weekdaysInChinese[((calendar.days[day].weekday -1) + 7) % 7]
+    calendar.$('lunarDay').innerHTML = calendar.getLunarMonthString(calendar.days[day].lunarMonth)+calendar.getLunarDayString(calendar.days[day].lunarDay)
+    calendar.$('nationHoliday').innerHTML = calendar.days[day].nationalHoliday
 }
 
 //根据月数设置国际节日
@@ -539,17 +552,12 @@ calendar.updateTable = function (year, month) {
     //计算新月份总天数
     calendar.dayNum = calendar.getMonthDays(year, month)
 
-
-
     //显示本月日历
     calendar.calDays(year,month, calendar.dayNum)
     calendar.setHoliday(month)
     calendar.updateDays()
 
-    //更改天干地支显示
-    var gan = calendar.calGan(year) - 1
-    var zhi = calendar.calZhi(year) - 1
-    calendar.$("yearInfo").innerHTML = calendar.tianGan[gan]+ calendar.diZhi[zhi] + calendar.chineseZodiac[zhi] + "年"
+
 };
 
 //更改年月后更新视图
@@ -577,6 +585,5 @@ calendar.onChangeOfYearMonth = function () {
     calendar.updateTable(currYear, currMonth)
 
     calendar.showDayInfo(day.getDate() - 1)
-
 
 })()

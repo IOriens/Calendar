@@ -7,21 +7,37 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<header>
 
+</header>
 <div class="main">
-    <!--年月选择框-->
-    <select name="years" id="year"></select>
-    <select name="months" id="month"></select>
-    
+
+
+    <!--信息展示-->
+    <div class="info">
+        <div class="lunarInfo">
+            <div id="yearInfo">
+                <h1 id="lunarYearInfo"></h1>
+                <h3 id="lunarDay"></h3>
+                <h3 id="nationHoliday"></h3>
+            </div>
+        </div>
+        <div class="solarInfo">
+            <h1 id="selectedDay"></h1>
+            <h2 id="weekDay"></h2>
+            <!--年月选择框-->
+            <select name="years" id="year"></select><label for="year">年</label>
+            <select name="months" id="month"></select><label for="month">月</label>
+        </div>
+    </div>
+
     <!--日历显示-->
     <table id="date-table">
     </table>
 
-    <!--信息展示-->
-    <div id="info">
-        <div id="yearInfo"></div>
-        <div id="dayInfo"></div>
-    </div>
+
+
+
 
 </div>
 

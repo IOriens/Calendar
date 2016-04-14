@@ -1,6 +1,13 @@
 * {
   box-sizing: border-box; }
 
+body {
+  text-align: center; }
+
+h1, h2, h3 {
+  margin: 0;
+  padding: 0; }
+
 table {
   width: 100%;
   text-align: center;
@@ -12,33 +19,55 @@ table {
     border-bottom: 2px solid #A6D2FE; }
   table tr:last-child {
     border: none; }
-  table th {
-    font-size: 1em;
-    color: #000;
-    font-weight: 400; }
   table th, table td {
     display: inline-block;
     padding: 10px 5px;
     width: 14.28571%;
-    height: 50px;
+    height: 55px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden; }
     table th h1, table td h1 {
-      font-weight: bold;
-      font-size: 14px; }
+      font: bold 14px/14px "SimHei"; }
     table th span, table td span {
-      font-size: 13px; }
-
-body {
-  text-align: center; }
+      font-size: 13px;
+      color: #9B9C97; }
+  table th {
+    font-size: 1em;
+    color: #000;
+    font-weight: 400;
+    height: 40px; }
 
 select {
   display: inline-block;
   padding: 5px;
-  margin: 15px; }
+  margin: 5px; }
 
-@media (min-width: 1024px) {
+.info {
+  background-color: #B3D7E6;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+  margin-bottom: 10px; }
+  .info h1, .info h2, .info h3 {
+    margin: 8px; }
+  .info .solarInfo {
+    float: right;
+    width: 50%; }
+    .info .solarInfo h1 {
+      font-size: 40px; }
+  .info .lunarInfo {
+    float: left;
+    width: 50%;
+    padding: 5px; }
+    .info .lunarInfo h1 {
+      font-size: 30px; }
+    .info .lunarInfo h2 {
+      font-size: 30px; }
+    .info .lunarInfo h3 {
+      font-size: 20px; }
+
+@media (min-width: 768px) {
   .main {
     width: 600px;
     margin: 0 auto; } }
