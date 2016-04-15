@@ -24,4 +24,4 @@ $ node server.js
 单机版在客户端计算相关数据，并使用这些数据动态显示日历信息。
 
 ### 界面
-界面通过`html`和`scss`构建，`html`文件中只包含了页面的框架，主体内容使用`JavaScript`生成
+界面通过`html`和`scss`构建，`html`文件中只包含了页面的框架，主体内容使用`JavaScript`生成。
