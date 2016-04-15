@@ -5,7 +5,7 @@
 http://localhost:8081/api/v1/calendar
 
 ## 支持格式
-JSON
+JSONP
 
 ## HTTP请求方式
 GET

@@ -6,16 +6,23 @@ function Calendar() {
     this.days = []
     this.dayNum = 0
     this.weekdaysInChinese = ["一","二","三","四","五","六","日"];
+    
     this.tianGan = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"]
+    
     this.diZhi = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"]
+    
     this.chineseZodiac = ["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"]
+    
     this.solarTerm = [
         "小寒", "大寒", "立春", "雨水", "惊蛰", "春分",
         "清明", "谷雨", "立夏", "小满", "芒种", "夏至",
         "小暑", "大暑", "立秋", "处暑", "白露", "秋分",
         "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"]
+    
     this.lunarString1 = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"]
+    
     this.lunarString2 = ["初", "十", "廿", "卅", "正", "腊", "冬", "闰"]
+    
     this.lunarInfo = [
         0x4bd8, 0x4ae0, 0xa570, 0x54d5, 0xd260, 0xd950, 0x5554, 0x56af,
         0x9ad0, 0x55d2, 0x4ae0, 0xa5b6, 0xa4d0, 0xd250, 0xd295, 0xb54f,
@@ -172,8 +179,7 @@ function Calendar() {
         }
     }
 
-
-//获取当月的阳历天数
+    //获取当月的阳历天数
     this.getMonthDays = function (year, month) {
         var leapYear = false;
         if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) leapYear = true;
@@ -196,16 +202,16 @@ function Calendar() {
         }
     }
 
-//计算星期几
-//算法：https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
+    //计算星期几
+    //算法：https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
     this.calWeekDay = function (y, m, d) {
         var t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
         y -= m < 3;
         return (y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) + t[m-1] + d) % 7;
     };
 
-//干支计算
-//计算方法：http://blog.csdn.net/orbit/article/details/9210413
+    //干支计算
+    //计算方法：http://blog.csdn.net/orbit/article/details/9210413
     this.calGan = function (year) {
         var sc = year - 2000;
         return ((7 + sc) % 10 + 10) % 10
@@ -214,15 +220,11 @@ function Calendar() {
         var sc = year - 2000;
         return ((5 + sc)% 12 + 12) % 12
     };
+    
+    //农历计算部分
+    //算法：http://blog.csdn.net/luozhuang/article/details/8678458
 
-
-//农历计算部分
-//算法：http://blog.csdn.net/luozhuang/article/details/8678458
-//==========================
-
-    /**
-     * 返回农历年闰月月份
-     */
+    //返回农历年闰月月份
     this.getLunarLeapMonth = function (lunarYear) {
         // 数据表中,每个农历年用16bit来表示,
         // 前12bit分别表示12个月份的大小月,最后4bit表示闰月
@@ -232,10 +234,7 @@ function Calendar() {
         return leapMonth;
     }
 
-
-    /**
-     * 返回农历年闰月的天数
-     */
+    //返回农历年闰月的天数
     this.getLunarLeapDays = function(lunarYear) {
         // 下一年最后4bit为1111,返回30(大月)
         // 下一年最后4bit不为1111,返回29(小月)
@@ -243,12 +242,8 @@ function Calendar() {
         return this.getLunarLeapMonth(lunarYear) > 0 ? ((this.lunarInfo[lunarYear - 1899] & 0xf) == 0xf ? 30: 29) : 0
     }
 
-    /**
-     * 返回农历年的总天数
-     *
-     * param lunarYear 指定农历年份(数字)
-     * return 该农历年的总天数(数字)
-     */
+
+    //返回农历年的总天数
     this.getLunarYearDays = function(lunarYear) {
         // 按小月计算,农历年最少有12 * 29 = 348天
         var daysInLunarYear = 348;
@@ -264,26 +259,15 @@ function Calendar() {
         return daysInLunarYear;
     }
 
-    /**
-     * 返回农历年正常月份的总天数
-     *
-     * lunarYear 指定农历年份(数字)
-     * lunarMonth 指定农历月份(数字)
-     * 该农历年闰月的月份(数字,没闰返回0)
-     */
+    // 返回农历年正常月份的总天数
     this.getLunarMonthDays = function(lunarYear, lunarMonth) {
         // 数据表中,每个农历年用16bit来表示,
         // 前12bit分别表示12个月份的大小月,最后4bit表示闰月
         return ((this.lunarInfo[lunarYear - 1900] & (0x10000 >> lunarMonth)) != 0) ? 30 : 29;
 
     }
-
-    /**
-     * 返回指定数字的农历月份表示字符串
-     *
-     *  lunarMonth 农历月份(数字)
-     * 农历月份字符串 (例:正)
-     */
+            
+    //返回指定数字的农历月份表示字符串
     this.getLunarMonthString = function(lunarMonth) {
         var lunarMonthString = "";
         if (lunarMonth == 1) {
@@ -298,13 +282,8 @@ function Calendar() {
         }
         return lunarMonthString + "月";
     }
-
-    /**
-     * 返回指定数字的农历日表示字符串
-     *
-     * lunarDay 农历日(数字)
-     * 农历日字符串 (例: 廿一)
-     */
+    
+     //返回指定数字的农历日表示字符串
     this.getLunarDayString = function(lunarDay) {
         if (lunarDay < 1 || lunarDay > 30) {
             return "";
@@ -321,8 +300,8 @@ function Calendar() {
         }
         return c1 + c2;
     }
-
-
+    
+    //计算农历信息
     this.calLunarInfo = function (y, m, d) {
         var solarDay = new Date(y,m,d)
         var baseDay = new Date(1900, 0, 31)
@@ -380,13 +359,8 @@ function Calendar() {
     this.getSolarTermCalendar = function (solarYear, index) {
         return new Date((31556925974.7 * (solarYear - 1900) + this.solarTermInfo[index] * 60000) + Date.UTC(1900, 0, 6, 2, 5))
     }
-
-
-    /**
-     * 返回公历日期的节气字符串
-     *
-     * 二十四节气字符串,若不是节气日,返回空串(例:冬至)
-     */
+    
+    //返回公历日期的节气字符串
     this.getTermString = function(solarYear) {
         // 二十四节气
 
@@ -432,7 +406,7 @@ function Calendar() {
     };
 
 
-//根据月数设置国际节日
+    //根据月数设置国际节日
     this.setHoliday = function (month) {
         var i, arr = this.nationalHoliday[month]
         var keys = Object.keys(arr)
@@ -441,6 +415,7 @@ function Calendar() {
         }
     }
 
+    //获取生成JSON文件所用的信息
     this.getDayJson = function (year, month) {
         this.dayNum = this.getMonthDays(year, month)
         this.calculateDaysInfo(year,month, this.dayNum)
@@ -448,7 +423,5 @@ function Calendar() {
         return this.days
     }
 }
-
-
 
 module.exports = Calendar

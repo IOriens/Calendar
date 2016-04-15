@@ -1,6 +1,13 @@
 {
   "name": "Calendar",
-  "version": "0.0.1",
+  "version": "2.0.1",
+  "author": "Oriens",
+  "description": "一个日历程序",
+  "license":"MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://git.coding.net/IOriens/Calendar.git"
+  },
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",

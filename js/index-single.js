@@ -272,9 +272,7 @@ calendar.calZhi = function (year) {
 //算法：http://blog.csdn.net/luozhuang/article/details/8678458
 //==========================
 
-/**
- * 返回农历年闰月月份
- */
+// 返回农历年闰月月份
 calendar.getLunarLeapMonth = function (lunarYear) {
     // 数据表中,每个农历年用16bit来表示,
     // 前12bit分别表示12个月份的大小月,最后4bit表示闰月
@@ -285,9 +283,7 @@ calendar.getLunarLeapMonth = function (lunarYear) {
 }
 
 
-/**
- * 返回农历年闰月的天数
- */
+// 返回农历年闰月的天数
 calendar.getLunarLeapDays = function(lunarYear) {
     // 下一年最后4bit为1111,返回30(大月)
     // 下一年最后4bit不为1111,返回29(小月)
@@ -295,12 +291,7 @@ calendar.getLunarLeapDays = function(lunarYear) {
     return calendar.getLunarLeapMonth(lunarYear) > 0 ? ((calendar.lunarInfo[lunarYear - 1899] & 0xf) == 0xf ? 30: 29) : 0
 }
 
-/**
- * 返回农历年的总天数
- *
- * param lunarYear 指定农历年份(数字)
- * return 该农历年的总天数(数字)
- */
+// 返回农历年的总天数
 calendar.getLunarYearDays = function(lunarYear) {
     // 按小月计算,农历年最少有12 * 29 = 348天
     var daysInLunarYear = 348;
@@ -316,13 +307,7 @@ calendar.getLunarYearDays = function(lunarYear) {
     return daysInLunarYear;
 }
 
-/**
- * 返回农历年正常月份的总天数
- *
- * lunarYear 指定农历年份(数字)
- * lunarMonth 指定农历月份(数字)
- * 该农历年闰月的月份(数字,没闰返回0)
- */
+// 返回农历年正常月份的总天数
 calendar.getLunarMonthDays = function(lunarYear, lunarMonth) {
     // 数据表中,每个农历年用16bit来表示,
     // 前12bit分别表示12个月份的大小月,最后4bit表示闰月
@@ -330,12 +315,8 @@ calendar.getLunarMonthDays = function(lunarYear, lunarMonth) {
 
 }
 
-/**
- * 返回指定数字的农历月份表示字符串
- *
- *  lunarMonth 农历月份(数字)
- * 农历月份字符串 (例:正)
- */
+
+// 返回指定数字的农历月份表示字符串
 calendar.getLunarMonthString = function(lunarMonth) {
     var lunarMonthString = "";
     if (lunarMonth == 1) {
@@ -351,12 +332,7 @@ calendar.getLunarMonthString = function(lunarMonth) {
     return lunarMonthString + "月";
 }
 
-/**
- * 返回指定数字的农历日表示字符串
- *
- * lunarDay 农历日(数字)
- * 农历日字符串 (例: 廿一)
- */
+// 返回指定数字的农历日表示字符串
 calendar.getLunarDayString = function(lunarDay) {
     if (lunarDay < 1 || lunarDay > 30) {
         return "";
@@ -374,7 +350,7 @@ calendar.getLunarDayString = function(lunarDay) {
     return c1 + c2;
 }
 
-
+//计算农历信息
 calendar.calLunarInfo = function (y, m, d) {
     var solarDay = new Date(y,m,d)
     var baseDay = new Date(1900, 0, 31)
@@ -434,11 +410,8 @@ calendar.getSolarTermCalendar = function (solarYear, index) {
 }
 
 
-/**
- * 返回公历日期的节气字符串
- *
- * 二十四节气字符串,若不是节气日,返回空串(例:冬至)
- */
+// 返回公历日期的节气字符串
+
 calendar.getTermString = function(solarYear) {
     // 二十四节气
 
@@ -534,7 +507,15 @@ calendar.showDayInfo = function (day) {
     calendar.$('selectedDay').innerHTML = (day + 1)
     calendar.$('weekDay').innerHTML = "星期" + calendar.weekdaysInChinese[((calendar.days[day].weekday -1) + 7) % 7]
     calendar.$('lunarDay').innerHTML = calendar.getLunarMonthString(calendar.days[day].lunarMonth)+calendar.getLunarDayString(calendar.days[day].lunarDay)
-    calendar.$('nationHoliday').innerHTML = calendar.days[day].nationalHoliday
+    var holidayInfo = ""
+    if(calendar.days[day].nationalHoliday.length > 0 ) {
+        holidayInfo = calendar.days[day].nationalHoliday
+    } else if (calendar.days[day].solarSessionTerm.length > 0) {
+        holidayInfo = calendar.days[day].solarSessionTerm
+    } else {
+        holidayInfo = " "
+    }
+    calendar.$('nationHoliday').innerHTML = holidayInfo
 }
 
 //根据月数设置国际节日
